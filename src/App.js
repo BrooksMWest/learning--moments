@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { NavBar } from "./components/Nav/NavBar"
+import { Outlet, Route, Routes } from "react-router-dom"
+import { ItemsList } from "./components/items/ItemsList"
+import { NewItemForm } from "./components/forms/CreateItem"
+import { HomePage } from "./components/HomePage"
+import "./App.css"
+import { EditItemForm } from "./components/forms/EditItem"
 
-function App() {
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <>
+    <NavBar />
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <Outlet />
+            </>
+        }
+        >         
+          <Route index />
+          <Route path="home" element={<HomePage />}/>
+          <Route path="login" />
+          <Route path="myItems" element={<ItemsList />} />
+          <Route path="addItems" element={<NewItemForm />} />
+          <Route path="editItems" element={<EditItemForm />}/>
+          <Route path="logOut" />
+          
+      </Route>
+    </Routes>
+    </>
+    )
+  }
 
-export default App;

@@ -5,6 +5,7 @@ import { NewItemForm } from "./components/forms/CreateItem"
 import { HomePage } from "./components/HomePage"
 import "./App.css"
 import { EditItemForm } from "./components/forms/EditItem"
+import { ItemDetails } from "./components/items/itemDetails"
 
 export const App = () => {
   return (
@@ -23,7 +24,8 @@ export const App = () => {
           <Route path="home" element={<HomePage />}/>
           <Route path="login" />
           <Route path="myItems" element={<ItemsList />} />
-          <Route path="addItems" element={<NewItemForm />} />
+          <Route path=":itemId" element={<ItemDetails />} />
+          <Route path="addItems"element={<NewItemForm />} />
           <Route path="editItems" element={<EditItemForm />}/>
           <Route path="logOut" />
           

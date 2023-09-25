@@ -1,95 +1,142 @@
 import { useEffect, useState } from "react"
-import { editItem } from "../../services/itemsService"
+import { getItemById } from "../../services/itemsService" 
 import { useParams, useNavigate } from "react-router-dom"
 import { getTypes } from "../../services/typesService"
 
-export const EditItemForm = () => {
-    const [editedItem, setEditedItem] = useState({
-        id: 0,
-        userId: 0,
-        name: "",
-        typeId: 0,
-        description: "",
-        borrowerName: "",
-        borrowerEmail: "",
-        dateBorrowed: ""
-    })
+export const EditItem = () => {
+    const [item, setItems] = useState({})
+    const [type, setTypes] = useState({})
 
-const navigate = useNavigate()
+    const { itemId } = useParams()
+    const navigate = useNavigate()
 
+    useEffect(() => {
+        getTypes().then((typesArray) => {
+            setTypes(typesArray)
+        })
+    }, [])
+    
 
+        useEffect(() => {
+            getItemById(itemId).then((itemObj) => {
+                setItems(itemObj)
+            })
+        }, [itemId])
 
-const updatedItem = {
-    name: editedItem.name,
-    description: editedItem.description,
-    borrowerName: editedItem.borrowerName,
-    borrowerEmail: editedItem.borrowerEmail,
-    typeId: parseInt(editedItem.typeId),
-    dateBorrowed: editedItem.dateBorrowed
-}    
+        const handleSave = (event) => {
+            event.preventDefault()
 
-//editItem(updatedItem).then(() => {
-    //navigate(`/myItems`)
-//})
-
-    return (
-        <form className="create-item-form">
-            <h2 className="create-item-form-title">Edit One of Your Items</h2>
+            const updatedItem = {
+                name: item.name,
+                description: item.description,
+                borrowerName: item.borrowerName,
+                borrowerEmail: item.borrowerEmail,
+                typeId: parseInt(item.typeId),
+                dateBorrowed: parseInt(item.dateBorrowed),
+            }
+            editItem(updatedItem).then(() => {
+                navigate(`/myItems`)
+            })
+        }
+        
+        return ( 
+            <form className="create-item-form">
+            <h2 className="create-item-form-title">Create and Loan an Item</h2>
             <fieldset>
                 <div>
-                    <label htmlFor="itemName">Item Name</label>
+                    <label htmlFor="name">Item Name</label>
                     <input 
-                    value={editedItem.name}
-                    name
+                    value={item.name}
+                    name="name"
                     type="text"
                     className="form-control"
                     placeholder="item name"
-                    //onChange={handleInputChange}
+                    onChange={handleInputChange}
                     />
                 </div>
             </fieldset>
         
             <fieldset>
                 <div>
-                    <label htmlFor="itemName">Item Description</label>
+                    <label htmlFor="itemDescription">Item Description</label>
                     <input 
-                    value={editedItem.description}
-                    name
+                    value={newItem.description}
+                    name="description"
                     type="text"
                     className="form-control"
                     placeholder="item description"
-                    //onChange={handleInputChange}
+                    onChange={handleInputChange}
                     />
                 </div>
             </fieldset>
 
             <fieldset>
                 <div>
-                    <label htmlFor="itemName">Borrower Name</label>
+                    <label htmlFor="borrowerName">Borrower Name</label>
                     <input 
-                    value={editedItem.borrowerName}
-                    name
+                    value={newItem.borrowerName}
+                    name="borrowerName"
                     type="text"
                     className="form-control"
                     placeholder="Who is borrowing your item?"
-                    //onChange={handleInputChange}
+                    onChange={handleInputChange}
                     />
                 </div>
             </fieldset>
 
             <fieldset>
                 <div>
-                    <label htmlFor="itemName">Borrower Email</label>
+                    <label htmlFor="borrowerEmail">Borrower Email</label>
                     <input 
-                    value={editedItem.borrowerEmail}
-                    name
+                    value={newItem.borrowerEmail}
+                    name="borrowerEmail"
                     type="text"
                     className="form-control"
                     placeholder="Borrower Email"
-                    //onChange={handleInputChange}
+                    onChange={handleInputChange}
                     />
                 </div>
             </fieldset>
+
+            <fieldset>
+                <div>
+                    <label htmlFor="type">Select Item Type</label>
+                    <select
+                        className="type-selector"
+                        onChange={handleSelectChange}
+                        value={selectedType}
+                        name="type"
+                        >
+                            <option value="">-- Select Item Type --</option>
+                            {types.map((typeObj) => {
+                                return (
+                            <option key={types.id} value={typeObj.id}>
+                                {typeObj.name}
+                            </option>
+                                )
+                          }) }
+                    </select>
+                    </div>
+            </fieldset>
+
+            <fieldset> 
+              
+            <label htmlFor="dateBorrowed">Date Borrowed</label>      
+            <input type="date"
+                    className="date"
+                    onChange={handleDateChange}
+                    value={dateBorrowed}
+                    name="dateBorrowed"
+            />
+            
+         </fieldset>
+            <div>    
+            <button className="btn" onClick={handleSave}>
+                Loan out Item
+            </button>
+            </div>
         </form>
-    )
-}
+        )
+
+
+    }

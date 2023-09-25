@@ -1,28 +1,22 @@
 import { useEffect, useState } from "react"
 import { postItem } from "../../services/itemsService"
 import { useNavigate } from "react-router-dom"
+
 import { getTypes } from "../../services/typesService"
 
 export const NewItemForm = () => {
-    const [itemNames, setItemNames] = useState([])
-    const [itemDescriptions, setItemDescriptions] = useState([])
-    const [borrowernames, setBorrowerNames] = useState([])
-    const [borrowerEmail, setBorrowerEmail] = useState([])
-    const [dateBorrowed, setDateBorrowed] = useState([])
-
-    const TypeSelector = () => {
-        const [selectedType, setSelectedType] = useState("")
-    }
-    
+    const [dateBorrowed, setDateBorrowed] = useState("")
+    const [selectedType, setSelectedType] = useState("")
+    const [types, setTypes] = useState ([])
     const [newItem, setNewItem] = useState({
         id: 0,
         userId: 0,
         name: "",
-        typeId: 0,
+        typeId: null,
         description: "",
         borrowerName: "",
         borrowerEmail: "",
-        dateBorrowed: ""
+        dateBorrowed: "",
     })
 
     const navigate = useNavigate()
@@ -31,102 +25,146 @@ export const NewItemForm = () => {
         getTypes().then((typesArray) => {
             setTypes(typesArray)
         })
-    } )
-
-    const handleTypeChange = (event) => {
-        setSelectedType(event.target.value)
+    }, [])
+//handleInputChange is used for all of my inputs!!
+    const handleInputChange = (event) => {
+        console.log(event)
+        const { name, value } = event.target // {what i'm taking out of the target} = where the event is happening
+        setNewItem({...newItem, //... is the spread operator that puts stuff in new object
+        [name]: value,  // [name] whatever field i'm typing into  value is whatever i'm typing
+    })
 }
 
+const handleSelectChange = (event) => {
+    setSelectedType(event.target.value)
+    setNewItem({ ...newItem, typeId: event.target.value })
+}
 
+const handleDateChange = (event) => {
+    setDateBorrowed(event.target.value)
+}
 
+const handleSave = (event) => {
+    event.preventDefault()
 
-const newLoanItem = {
-    name: newItem.name,
-    description: newItem.description,
-    borrowerName: newItem.borrowerName,
-    borrowerEmail: newItem.borrowerEmail,
-    typeId: parseInt(newItem.typeId),
-    dateBorrowed: newItem.dateBorrowed
-}    
+//const formattedDate = new Date(dateBorrowed).toISOString().split("T")[0]
+//toISOString method that returns a string representing date time string format
+// .split("T")(0)
 
-//postItem(newLoanItem).then(() => {
-    //navigate("myItems")
-//})
+    const newLoanItem = {
+        name: newItem.name,
+        description: newItem.description,
+        borrowerName: newItem.borrowerName,
+        borrowerEmail: newItem.borrowerEmail,
+        typeId: newItem.typeId,
+        dateBorrowed: dateBorrowed, //from above
+    }    
+    
+    postItem(newLoanItem)
+    .then(() => {
+        navigate("myItems")
+    })
+    }
+    
+    
+
 
     return (
         <form className="create-item-form">
             <h2 className="create-item-form-title">Create and Loan an Item</h2>
             <fieldset>
                 <div>
-                    <label htmlFor="itemName">Item Name</label>
+                    <label htmlFor="name">Item Name</label>
                     <input 
                     value={newItem.name}
-                    name
+                    name="name"
                     type="text"
                     className="form-control"
                     placeholder="item name"
-                    //onChange={handleInputChange}
+                    onChange={handleInputChange}
                     />
                 </div>
             </fieldset>
         
             <fieldset>
                 <div>
-                    <label htmlFor="itemName">Item Description</label>
+                    <label htmlFor="itemDescription">Item Description</label>
                     <input 
                     value={newItem.description}
-                    name
+                    name="description"
                     type="text"
                     className="form-control"
                     placeholder="item description"
-                    //onChange={handleInputChange}
+                    onChange={handleInputChange}
                     />
                 </div>
             </fieldset>
 
             <fieldset>
                 <div>
-                    <label htmlFor="itemName">Borrower Name</label>
+                    <label htmlFor="borrowerName">Borrower Name</label>
                     <input 
                     value={newItem.borrowerName}
-                    name
+                    name="borrowerName"
                     type="text"
                     className="form-control"
                     placeholder="Who is borrowing your item?"
-                    //onChange={handleInputChange}
+                    onChange={handleInputChange}
                     />
                 </div>
             </fieldset>
 
             <fieldset>
                 <div>
-                    <label htmlFor="itemName">Borrower Email</label>
+                    <label htmlFor="borrowerEmail">Borrower Email</label>
                     <input 
                     value={newItem.borrowerEmail}
-                    name
+                    name="borrowerEmail"
                     type="text"
                     className="form-control"
                     placeholder="Borrower Email"
-                    //onChange={handleInputChange}
+                    onChange={handleInputChange}
                     />
                 </div>
             </fieldset>
 
             <fieldset>
                 <div>
-                    <label htmlFor="itemType">Select Item Type</label>
+                    <label htmlFor="type">Select Item Type</label>
                     <select
                         className="type-selector"
+                        onChange={handleSelectChange}
                         value={selectedType}
-                        onChange={handleTypeChange}>
-                            <option key={type.id} value={type.id}>
-                                {type.name}
+                        name="type"
+                        >
+                            <option value="">-- Select Item Type --</option>
+                            {types.map((typeObj) => {
+                                return (
+                            <option key={types.id} value={typeObj.id}>
+                                {typeObj.name}
                             </option>
-
+                                )
+                          }) }
                     </select>
-                </div>
+                    </div>
             </fieldset>
 
+            <fieldset> 
+              
+            <label htmlFor="dateBorrowed">Date Borrowed</label>      
+            <input type="date"
+                    className="date"
+                    onChange={handleDateChange}
+                    value={dateBorrowed}
+                    name="dateBorrowed"
+            />
+            
+         </fieldset>
+            <div>    
+            <button className="btn" onClick={handleSave}>
+                Loan out Item
+            </button>
+            </div>
         </form>
     )
-}
+    }

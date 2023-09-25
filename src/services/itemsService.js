@@ -18,7 +18,6 @@ export const postItem = (item) => {
     ).then((res) => res.json())
   }
   
-  console.log(getItemById())
 
   export const editItem = (item) => {
     return fetch(`http://localhost:8088/items/${item.id}`, {

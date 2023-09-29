@@ -12,11 +12,12 @@ export const NewItemForm = () => {
         id: 0,
         userId: 0,
         name: "",
-        typeId: null,
+        typeId: 0,
         description: "",
         borrowerName: "",
         borrowerEmail: "",
         dateBorrowed: "",
+        ownerId: 0
     })
 
     const navigate = useNavigate()
@@ -56,13 +57,14 @@ const handleSave = (event) => {
         description: newItem.description,
         borrowerName: newItem.borrowerName,
         borrowerEmail: newItem.borrowerEmail,
-        typeId: newItem.typeId,
-        dateBorrowed: dateBorrowed, //from above
+        typeId:parseInt(newItem.typeId),
+        dateBorrowed: dateBorrowed,
+        ownerId: parseInt(newItem.ownerId)
     }    
     
     postItem(newLoanItem)
     .then(() => {
-        navigate("myItems")
+        navigate("/myItems")
     })
     }
     

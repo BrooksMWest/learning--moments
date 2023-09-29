@@ -4,8 +4,12 @@ import { ItemsList } from "./components/items/ItemsList"
 import { NewItemForm } from "./components/forms/CreateItem"
 import { HomePage } from "./components/HomePage"
 import "./App.css"
-import { EditItemForm } from "./components/forms/EditItem"
-import { ItemDetails } from "./components/items/itemDetails"
+import { EditLoanedItemForm } from "./components/forms/EditLoanedItem"
+import { Register } from "./components/auth/Register"
+import { Login } from "./components/auth/Login"
+import { ApplicationViews } from "./views/ApplicationViews"
+import { Authorized } from "./views/Authorized"
+import { WelcomePage } from "./components/WelcomePage"
 
 export const App = () => {
   return (
@@ -19,15 +23,24 @@ export const App = () => {
             <Outlet />
             </>
         }
-        >         
+        >  
           <Route index />
-          <Route path="home" element={<HomePage />}/>
-          <Route path="login" />
-          <Route path="myItems" element={<ItemsList />} />
-          <Route path=":itemId" element={<ItemDetails />} />
-          <Route path="addItems"element={<NewItemForm />} />
-          <Route path="editItems" element={<EditItemForm />}/>
-          <Route path="logOut" />
+          <Route path="/login" element={<Login />}/>
+          <Route path="/welcome" element={<WelcomePage /> }/>
+          <Route path="/home" element={<HomePage />}/>
+          <Route path="/signUp" element={<Register />}/>
+          <Route path="/myItems" element={<ItemsList />} />
+          <Route path="/addItems"element={<NewItemForm />} />
+          <Route path="/editItems/:itemId" element={<EditLoanedItemForm />}/>
+          <Route path="/logOut" />
+          <Route 
+            path="*" 
+            element={
+              <Authorized>
+                <ApplicationViews />
+              </Authorized>
+            }
+        />
           
       </Route>
     </Routes>

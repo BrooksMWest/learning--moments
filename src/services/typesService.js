@@ -3,5 +3,6 @@ export const getTypes = () => {
 }
 
 export const getTypesById = (typeId) => {
-    return (fetch`http://localhost:8088/type`)
+    return (fetch`http://localhost:8088/types/${typeId}?_expand=name`
+    ).then ((res) => res.json())
 }

@@ -46,11 +46,11 @@ export const NonUserNavBar = () => {
           </Link>
         </li>
   
-        {localStorage.getItem("learning_user") ? (
+        {localStorage.getItem("currentUser") ? (
         <li className="navbar__item">
           <Link className="navbar__link" to=""
           onClick={() => {
-            localStorage.removeItem("learning_user")
+            localStorage.removeItem("currentUser")
             navigate("/login", { replace : true })
           }}>
             Logout

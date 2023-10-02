@@ -10,7 +10,7 @@ export const NavBar = () => {
       <Link className="navbar__link"
        to="/signUp"
         onClick={() => {
-        localStorage.removeItem("learning_user")
+        localStorage.removeItem("currentUser")
         navigate("/login", { replace: true })
       }}
       >
@@ -18,7 +18,7 @@ export const NavBar = () => {
     </Link>
     </li>
         <li className="navbar__item">
-        <Link className="navbar__link" to="/login">
+        <Link className="navbar__link navbar__link:hover" to="/login">
          Login
         </Link>
       </li>
@@ -42,16 +42,16 @@ export const NavBar = () => {
       </li>
 
       <li className="navbar__item">
-        <Link className="navbar__link" to="/editItems">
+        <Link className="navbar__link" to="/myItems">
           Edit an Item
         </Link>
       </li>
 
-      {localStorage.getItem("learning_user") ? (
+      {localStorage.getItem("currentUser") ? (
       <li className="navbar__item">
         <Link className="navbar__link" to=""
         onClick={() => {
-          localStorage.removeItem("learning_user")
+          localStorage.removeItem("currentUser")
           navigate("/login", { replace : true })
         }}>
           Logout

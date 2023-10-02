@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { postItem } from "../../services/itemsService"
 import { useNavigate } from "react-router-dom"
-
 import { getTypes } from "../../services/typesService"
+import "./Form.css"
 
-export const NewItemForm = () => {
+export const NewItemForm = ({ currentUser }) => {
     const [dateBorrowed, setDateBorrowed] = useState("")
     const [selectedType, setSelectedType] = useState("")
     const [types, setTypes] = useState ([])
@@ -59,7 +59,7 @@ const handleSave = (event) => {
         borrowerEmail: newItem.borrowerEmail,
         typeId:parseInt(newItem.typeId),
         dateBorrowed: dateBorrowed,
-        ownerId: parseInt(newItem.ownerId)
+        ownerId: parseInt(currentUser.id)
     }    
     
     postItem(newLoanItem)
@@ -72,9 +72,10 @@ const handleSave = (event) => {
 
 
     return (
+        <div className="form">
         <form className="create-item-form">
-            <h2 className="create-item-form-title">Create and Loan an Item</h2>
-            <fieldset>
+            <h1 className="create-item-form-title">Create and Loan an Item</h1>
+            <fieldset className="fieldset">
                 <div>
                     <label htmlFor="name">Item Name</label>
                     <input 
@@ -163,10 +164,11 @@ const handleSave = (event) => {
             
          </fieldset>
             <div>    
-            <button className="btn" onClick={handleSave}>
+            <button className="create-btn" onClick={handleSave}>
                 Loan out Item
             </button>
             </div>
         </form>
+        </div>
     )
     }

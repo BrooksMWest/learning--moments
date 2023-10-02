@@ -1,3 +1,15 @@
+.headers{
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}
+
 .item-container {
     display: flex;
     flex-wrap: wrap;
@@ -30,7 +42,7 @@
     box-shadow: 1px 3px 4px grey;
   }
   
-  #season-select {
+  #item-select {
     padding: 0.25rem;
     border-radius: 0.25rem;
     margin-left: 2rem;
@@ -56,19 +68,57 @@
     padding: 1rem;
   }
   
-  .btn {
+  .create-btn {
     align-self: flex-end;
     margin-right: 3rem;
     font-size: 1rem;
-    padding: 0.5rem;
+    padding: 1.5rem;
     box-shadow: 2px 2px 4px -1px grey;
-    background-color: darksalmon;
+    background-color: rgb(39, 139, 3);
+    border: none;
+    color: whitesmoke;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+
+  .delete-btn {
+    /* align-self: flex-end; */
+    margin-right: 3rem;
+    font-size: 1rem;
+    padding: 1.5rem;
+    box-shadow: 2px 2px 4px -1px grey;
+    background-color: rgb(244, 0, 0);
     border: none;
     color: white;
     border-radius: 7px;
     cursor: pointer;
   }
   
+  .edit-btn {
+    /* align-self: flex-end; */
+    margin-right: 3rem;
+    font-size: 1rem;
+    padding: 1.5rem;
+    box-shadow: 2px 2px 4px -1px grey;
+    background-color: rgb(247, 129, 2);
+    border: none;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .btn {
+    /* align-self: flex-end; */
+    margin-right: 3rem;
+    font-size: 1rem;
+    padding: 1.5rem;
+    box-shadow: 2px 2px 4px -1px grey;
+    background-color: rgb(249, 139, 21);
+    border: none;
+    color: white;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+
   .form-group {
     margin: 1rem;
   }

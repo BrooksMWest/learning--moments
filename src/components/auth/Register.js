@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import "./Login.css"
 import { createUser, getUserByEmail } from "../../services/userService"
 
@@ -20,10 +20,10 @@ export const Register = (props) => {
     createUser(newUser).then((createdUser) => {
       if (createdUser.hasOwnProperty("id")) {
         localStorage.setItem(
-          "learning_user",
+          "currentUser",
           JSON.stringify({
             id: createdUser.id,
-            staff: createdUser.isStaff,
+          
           })
         )
 
@@ -55,7 +55,7 @@ export const Register = (props) => {
     <main className="auth-container">
       <form className="auth-form" onSubmit={handleRegister}>
         <h1 className="header">Become a Loan Wolf</h1>
-        <h2>Please Register</h2>
+        <h2 className="subHeader">Please Register</h2>
         <fieldset className="auth-fieldset">
           <div>
             <input
@@ -83,11 +83,16 @@ export const Register = (props) => {
         </fieldset>
         <fieldset className="auth-fieldset">
           <div>
-            <button type="submit"> 
+            <button 
+            className="btn "
+            type="submit"> 
             Click here to be a somebody!</button>
           </div>
         </fieldset>
       </form>
+      <section className="subHeader">
+        <Link to="/login">Already a loan Wolf? Go to Login.</Link>
+      </section>
     </main>
   )
 }

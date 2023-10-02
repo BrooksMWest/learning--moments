@@ -15,7 +15,7 @@ export const Login = () => {
       if (foundUsers.length === 1) {
         const user = foundUsers[0]
         localStorage.setItem(
-          "learning_user",
+          "currentUser",
           JSON.stringify({
             id: user.id,
           })
@@ -33,7 +33,7 @@ export const Login = () => {
       <section>
         <form className="auth-form" onSubmit={handleLogin}>
           <h1 className="header">Welcome to the Loan Wolf</h1>
-          <h2>Please sign in</h2>
+          <h2 className="subHeader">Please sign in</h2>
 
           <fieldset className="auth-fieldset">
           <div>
@@ -53,6 +53,7 @@ export const Login = () => {
             <div>
               <input
                 type="email"
+                id="email"
                 value={email}
                 className="auth-form-input"
                 onChange={(evt) => set(evt.target.value)}
@@ -64,13 +65,13 @@ export const Login = () => {
           </fieldset>
           <fieldset className="auth-fieldset">
             <div>
-              <button type="submit">Sign in</button>
+              <button className="btn" type="submit">Sign in</button>
             </div>
           </fieldset>
         </form>
       </section>
-      <section className="register-link">
-        <Link to="/register">Not a member yet? Click here to register</Link>
+      <section className="subHeader">
+        <Link to="/signUp">Not a member yet? Click here to register</Link>
       </section>
     </main>
   )

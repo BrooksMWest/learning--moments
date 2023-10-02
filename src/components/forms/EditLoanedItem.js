@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { getItemById, editItem, deleteItem } from "../../services/itemsService" 
 import { useParams, useNavigate } from "react-router-dom"
 import { getTypes } from "../../services/typesService"
+import "./Form.css"
+
 
 export const EditLoanedItemForm = () => {
     const [item, setItems] = useState({})
@@ -42,6 +44,7 @@ export const EditLoanedItemForm = () => {
         }
        
         return ( 
+            <div>
             <form className="create-item-form">
                 <h2 className="create-item-form-title">Edit Your Item</h2>
                 <fieldset>
@@ -128,7 +131,7 @@ export const EditLoanedItemForm = () => {
                                     <option value="">-- Select Item Type --</option>
                                 {types.map((typeObj) => {
                                         return (
-                                            <option key={types.id} value={typeObj.id}>
+                                            <option key={typeObj.id} value={typeObj.id}>
                                                 {typeObj.name}
                                             </option>
                                         )
@@ -154,5 +157,6 @@ export const EditLoanedItemForm = () => {
                     </button>
                 </div>
         </form>
+        </div>
         )
     }

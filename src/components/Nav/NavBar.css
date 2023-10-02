@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    background-color: lightgreen;
+    background-color: lightblue;
     border-radius: 1rem;
     padding: 1rem;
     box-shadow: 1px 3px 4px grey;
@@ -22,7 +22,7 @@
   .navbar__link {
     text-decoration: none;
     color: black;
-    font-family: monospace;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.25rem;
   }
   
